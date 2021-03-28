@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import store from 'store'
 import { AuthRoute, ProtectedRoute } from 'utils/routeUtils'
+import ResponsiveThemeProvider from 'styles/ResponsiveThemeProvider'
 
 import Login from 'features/Login/Login'
 export const persistor = persistStore(store)
@@ -28,6 +29,7 @@ function App() {
 			</Helmet>
       <div className="App">
       <Provider store={store}>
+      <ResponsiveThemeProvider>
 				<PersistGate loading={null} persistor={persistor}>
 					<Router>
 						<Switch>
@@ -36,6 +38,7 @@ function App() {
 						</Switch>
 					</Router>
 				</PersistGate>
+				</ResponsiveThemeProvider>
 			</Provider>
 
       </div>
