@@ -1,90 +1,35 @@
-import React, { FunctionComponent, useState } from 'react'
-import styled from '@emotion/styled'
-import { useDispatch } from 'react-redux'
-import { login } from 'store/slices/userSlice'
-
+import React, { FunctionComponent, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from 'store/rootReducer'
+import { login } from "store/slices/userSlice";
+import { Input, Header, SubmitButton } from "components/shared/shared";
 const Login: FunctionComponent = () => {
-	const dispatch = useDispatch()
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
+  const dispatch = useDispatch();
+  const error = useSelector((state: RootState) => state.user.error)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = () => {
+      dispatch(login(email.toLocaleLowerCase(), password));
+  };
+  return (
+    <>
+      <Header>Welcome Friend</Header>
+      {error && error}
+      <Input
+        placeholder={"Email"}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <Input
+        placeholder={"Password"}
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
-	const handleLogin = () => {
-		dispatch(login(email.toLocaleLowerCase(), password))
-	}
+      <SubmitButton onClick={handleLogin}>Login</SubmitButton>
+    </>
+  );
+};
 
-	return (
-		<Container>
-			<Header>Welcome Friend</Header>
-
-			<Input
-				placeholder={'Email'}
-				value={email}
-				onChange={(e) => setEmail(e.target.value)}
-			/>
-
-			<Input
-				placeholder={'Password'}
-				type="password"
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-			/>
-
-			<SubmitButton onClick={handleLogin}>Login</SubmitButton>
-		</Container>
-	)
-}
-
-const Container = styled.div`
-	z-index: 100;
-	width: 360px;
-	height: 300px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	position: absolute;
-	opacity: 1;
-	background-color: white;
-	left: 0;
-	right: 0;
-	margin-left: auto;
-	margin-right: auto;
-	top: 10%;
-`
-
-const Header = styled.div`
-	font-family: Poppins;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 24px;
-	line-height: 25px;
-	letter-spacing: -0.408px;
-	color: #696868;
-	width: 100%;
-	padding: 16px;
-	margin-top: 20px;
-`
-
-const Input = styled.input`
-	width: 80%;
-	font-family: Poppins;
-	font-size: 13px;
-	line-height: 22px;
-	padding: 5px;
-`
-
-const SubmitButton = styled.button`
-	font-family: Poppins;
-	background-color: #3e3e3e;
-	border-radius: 3px;
-	color: white;
-	display: block;
-	width: 30%;
-	font-weight: 500;
-	line-height: 22px;
-	padding: 11px;
-	margin-bottom: 22px;
-	text-transform: capitalize;
-`
-
-export default Login
+export default Login;

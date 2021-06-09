@@ -1,19 +1,19 @@
-import React from 'react'
-import { ThemeProvider } from '@emotion/react'
-import { theme } from 'styles/Theme'
+import React from "react";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "styles/Theme";
 
 export default function ResponsiveThemeProvider({
-	children,
+  children,
 }: React.PropsWithChildren<{}>) {
-	const deviceWidth = window.innerWidth
+  const deviceWidth = window.innerWidth;
 
-	let device = 'desktop'
+  let device = "desktop";
 
-	if (deviceWidth < 600) {
-		device = 'phone'
-	} else if (deviceWidth < 1200) {
-		device = 'tablet'
-	} else if (deviceWidth < 1800) device = 'big'
+  if (deviceWidth < 600) {
+    device = "phone";
+  } else if (deviceWidth < 1200) {
+    device = "tablet";
+  } else if (deviceWidth < 1800) device = "big";
 
-	return <ThemeProvider theme={{ ...theme, device }}>{children}</ThemeProvider>
+  return <ThemeProvider theme={{ ...theme, device }}>{children}</ThemeProvider>;
 }

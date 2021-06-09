@@ -1,9 +1,11 @@
-import { combineReducers } from '@reduxjs/toolkit'
-import user from 'store/slices/userSlice'
+import { combineReducers } from "@reduxjs/toolkit";
+import user from "store/slices/userSlice";
+import trivias from "store/slices/triviaSlice";
 const rootReducer = combineReducers({
-	user
-})
+  user,
+  trivias,
+});
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;
 
-export default rootReducer
+export default rootReducer;

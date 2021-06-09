@@ -9,7 +9,7 @@ type RouteProps = {
 }
 
 const Auth = ({ component: Component, path, exact }: RouteProps) => {
-	const loggedIn = useSelector((state: RootState) => state.user.uid !== null)
+	const loggedIn = useSelector((state: RootState) => (state.user.uid && state.user.uid !== null))
 	return (
 		<Route
 			path={path}
@@ -22,13 +22,25 @@ const Auth = ({ component: Component, path, exact }: RouteProps) => {
 }
 
 const Protected = ({ component: Component, path, exact }: RouteProps) => {
+	const loggedIn = useSelector((state: RootState) => (state.user.uid && state.user.uid !== null))
+	return (
+		<Route
+			path={path}
+			exact={exact}
+			render={(props) =>
+				loggedIn ? <Component {...props} /> : <Redirect to="/cover" />
+			}
+		/>
+	)
+}
+const ProtectedStatic = ({ component: Component, path, exact }: RouteProps) => {
 	const loggedIn = useSelector((state: RootState) => state.user.uid !== null)
 	return (
 		<Route
 			path={path}
 			exact={exact}
 			render={(props) =>
-				loggedIn ? <Component {...props} /> : <Redirect to="/login" />
+				loggedIn ? <Component {...props} /> : <></>
 			}
 		/>
 	)
@@ -36,3 +48,4 @@ const Protected = ({ component: Component, path, exact }: RouteProps) => {
 
 export const AuthRoute = Auth
 export const ProtectedRoute = Protected
+export const ProtectedStaticRoute = ProtectedStatic
